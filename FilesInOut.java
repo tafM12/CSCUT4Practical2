@@ -1,34 +1,103 @@
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import java.lang.Number;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+ 
+//Method use for both name and date altering
+public class formatter {
+	/* change name to caputiliesd first letter
+	 *  and capitilises solo charecters */
+	public static String stringConverter(String n) 
+	{
+		if (n == null || n.isEmpty()) {
+			return n;
+		}
+		StringBuilder titleCase = new StringBuilder();
+		boolean isCap = true;
+		for (char charr : n.toCharArray()) {
+			if (Character.isSpaceChar(charr)) {
+				isCap = true;
+			} else if (isCap) {
+				charr = Character.toTitleCase(charr);
+				isCap = false;
+			} else {
+				charr = Character.toLowerCase(charr);
+			}
+			titleCase.append(charr);
+		}
 
-/**
- * 
- * CSCU9T4 Java strings and files exercise.
- *
- */
-public class FilesInOut {
+		
+		String formattedName = titleCase.toString();
+		String[] nameComponent = formattedName.split(" ");
 
-    public static void main(String[] args) {
-        // Replace this with statements to set the file name (input) and file name (output).
-        // Initially it will be easier to hardcode suitable file names.
 
-        // Set up a new Scanner to read the input file.
-        // Processing line by line would be sensible here.
-        // Initially, echo the text to System.out to check you are reading correctly.
-        // Then add code to modify the text to the output format.
+		switch (nameComponent.length) {
+			
+			case 3:	
+				nameComponent[1] = nameComponent[1] + ".";
 
-        // Set up a new PrintWriter to write the output file.
-        // Add suitable code into the above processing (because you need to do this line by line also.
-        // That is, read a line, write a line, loop.
+				// Rebuild the full name.
+				formattedName = "";
+				for (String nameC : nameComponent) {
+					formattedName = formattedName + nameC + " ";
+				}
 
-        // Finally, add code to read the filenames as arguments from the command line.
+				// Return the formatted name.
+				return formattedName.trim();
+			default:
+				// Return the formatted name.
+				return formattedName;
+		}
+	}
 
-        System.out.println("You need to add your own code to do anything");
+	// Formats name with -U flag.
+	public static String titleCaseConverterU(String n) 
+	{
+		if (n == null || n.isEmpty()) {
+			return n;
+		}
 
-    } // main
+	
+		String formattedName = n.toUpperCase();
 
-} // FilesInOut
+	
+		String[] nameComponent = isNumeric.lineSplit(formattedName);
+
+		switch (nameComponent.length) {
+		case 3:
+			// Add a full stop to single initial for middle name
+			nameComponent[1] = nameComponent[1] + ".";
+
+			// Rebuild the full name.
+			formattedName = "";
+			for (String nameC : nameComponent) {
+				formattedName = formattedName + nameC + " ";
+			}
+
+			// sends out the formatted name.
+			return formattedName.trim();
+		}
+		// Return the formatted name.
+		return formattedName;
+	}
+
+	// Formats date to dd/MM/yyyy format.
+	public static String dateConverter (String s)
+	{
+		if (s == null || s.isEmpty()) {
+			return s;
+		}
+
+		SimpleDateFormat parser = new SimpleDateFormat("ddMMyyyy");
+
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+ 
+		/*uses the simple date formatter to to set the pattern wanted and the PATTERN GIVEN SWAPPING THE TWO */
+		try {
+			Date date = parser.parse(s);
+			String dateInString = format.format(date);
+			return dateInString;
+		} catch (ParseException e) {e.printStackTrace();}
+		return null;
+	}
+
+}
